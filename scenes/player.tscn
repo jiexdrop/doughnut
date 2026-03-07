@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ccsiamhj8f0wg"]
 
 [ext_resource type="Texture2D" uid="uid://03o4762qnkdd" path="res://assets/Sprite-0002.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://c206nwsvu2qll" path="res://scripts/player.gd" id="1_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://c532ohh88brhr" path="res://assets/Sprite-0003.png" id="2_g2els"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u8vuu"]
@@ -21,6 +22,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1204089923]
+script = ExtResource("1_qhqgy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1700758822]
 shape = SubResource("RectangleShape2D_u8vuu")
