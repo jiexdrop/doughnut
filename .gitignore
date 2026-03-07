@@ -1,0 +1,19 @@
+# Godot-specific ignores
+.godot/
+*.translation
+export_presets.cfg
+
+# Imported assets (engine re-imports on open)
+*.import
+
+# Build / export outputs
+/build/
+/export/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor metadata (optional — keep if you want to share editor layout)
+# .godot/editor/
