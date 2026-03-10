@@ -1,28 +1,69 @@
 extends Node2D
 
-# Grid dimensions in tiles
 const GRID_WIDTH := 32
 const GRID_HEIGHT := 18
-const TILE_SIZE := 8  # pixels per tile
+
+@export var next_level: PackedScene
+@onready var tilemap: TileMapLayer = $TileMapLayer
+var goal_positions: Array[Vector2i] = []
+
+# Update these to match your actual TileSet IDs
+const GOAL_SOURCE_ID = 0 
+const GOAL_ATLAS_COORDS = Vector2i(1, 2) # The 'X' or 'Target' tile
 
 func _ready() -> void:
-	_fill_default_tilemap()
+	_connect_signals()
+	_locate_goals()
 
-func _fill_default_tilemap() -> void:
-	# Fills the tilemap area so the grid bounds are visible in the editor.
-	# Replace or extend this with your own tile-painting logic.
-	var tilemap: TileMapLayer = $TileMapLayer
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("restart"):
+		get_tree().reload_current_scene()
 
-	# Nothing to paint until a TileSet with actual tiles is assigned.
-	# This loop is intentionally left as a stub so it compiles and runs
-	# without errors on a fresh project (no source_id exists yet).
-	if tilemap.tile_set == null:
-		return
+func _connect_signals() -> void:
+	for box in get_tree().get_nodes_in_group("boxes"):
+		if not box.is_connected("on_move", check_win_condition):
+			box.on_move.connect(check_win_condition)
 
-	# Example: paint tile (source_id=0, atlas_coords=(0,0)) across the grid.
-	# Uncomment and adjust once you have tiles in your TileSet.
-	#
-	# for x in GRID_WIDTH:
-	#     for y in GRID_HEIGHT:
-	#         tilemap.set_cell(Vector2i(x, y), 0, Vector2i(0, 0))
-	pass
+func _locate_goals() -> void:
+	goal_positions.clear()
+	# Scan the grid for tiles matching our Goal ID
+	for x in GRID_WIDTH:
+		for y in GRID_HEIGHT:
+			var coords = Vector2i(x, y)
+			if tilemap.get_cell_source_id(coords) == GOAL_SOURCE_ID:
+				if tilemap.get_cell_atlas_coords(coords) == GOAL_ATLAS_COORDS:
+					goal_positions.append(coords)
+
+func check_win_condition() -> void:
+	var boxes = get_tree().get_nodes_in_group("boxes")
+	var boxes_on_goals = 0
+
+	# Reset all boxes to normal first, then check positions
+	for box in boxes:
+		var current_grid_pos = tilemap.local_to_map(box.position)
+		
+		if current_grid_pos in goal_positions:
+			box.set_on_goal(true)
+			boxes_on_goals += 1
+		else:
+			box.set_on_goal(false)
+
+	# If every goal is covered by a box
+	if boxes_on_goals >= goal_positions.size() and goal_positions.size() > 0:
+		print("Level Complete!")
+		_load_next_level()
+
+func is_box_at(grid_pos: Vector2i) -> bool:
+	# Convert grid coords (1,1) to world pixels (8,8) for the check
+	var world_pos = tilemap.map_to_local(grid_pos)
+	
+	# Simple way: Check the "boxes" group for matching positions
+	for box in get_tree().get_nodes_in_group("boxes"):
+		if tilemap.local_to_map(box.position) == grid_pos:
+			box.color()
+			return true
+	return false
+
+func _load_next_level() -> void:
+	# Change this to your actual next scene path
+	get_tree().change_scene_to_packed(next_level)

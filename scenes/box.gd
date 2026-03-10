@@ -2,6 +2,12 @@ extends StaticBody2D
 
 # Reference the TileMap just like in your player script
 @onready var tile_map: TileMapLayer = $"../TileMapLayer" 
+@onready var sprite_2d: Sprite2D = $Sprite2D
+
+const NORMAL_TEXTURE = preload("res://assets/original_box.png") 
+const GOAL_TEXTURE = preload("res://assets/active_box.png")
+
+signal on_move
 
 # This function is called by the player when they try to push
 func try_push(dir: Vector2) -> bool:
@@ -32,4 +38,15 @@ func try_push(dir: Vector2) -> bool:
 	
 	# 3. If we get here, the path is clear. Move the box.
 	position = tile_map.map_to_local(target_tile)
+	on_move.emit()
 	return true
+	
+func set_on_goal(is_on_goal: bool) -> void:
+	if is_on_goal:
+		# Greenish color to indicate success
+		sprite_2d.texture = GOAL_TEXTURE
+	else:
+		# Reset to white (original texture colors)
+		sprite_2d.texture = NORMAL_TEXTURE
+	
+	print("Box color updated. On goal: ", is_on_goal)
