@@ -47,7 +47,7 @@ func pull_to(new_position: Vector2, dir: Vector2):
 	var old_tile = tile_map.local_to_map(old_pos)
 	
 	# Determine direction of the pull to find boxes behind the magnet
-	var behind_tile = old_tile + Vector2i(dir.x, dir.y)
+	var behind_tile = old_tile - Vector2i(dir.x, dir.y)
 	
 	var box_to_pull = get_box_at_tile(behind_tile)
 	

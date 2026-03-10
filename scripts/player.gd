@@ -47,16 +47,12 @@ func move_on_grid(dir):
 		position = target_position
 		moved_successfully = true
 
-	# 4. THE PULL LOGIC
-	# Only run this if the player actually moved to a new tile
-	
 	if moved_successfully:
-		# Check the tile we JUST VACATED
-		var behind_tile = old_tile - Vector2i(dir.x, dir.y)
-		var magnet_behind = get_magnet_at(behind_tile)
-		print("Magnet behind " , magnet_behind)
+		# Check the tile BEHIND our old spot (where a magnet would be trailing us)
+		var magnet_tile = old_tile - Vector2i(dir.x, dir.y) 
+		var magnet_behind = get_magnet_at(magnet_tile)
+		
 		if magnet_behind:
-			# Tell the magnet to move into our old spot
 			magnet_behind.pull_to(old_position, dir)
 
 func get_magnet_at(tile_coords: Vector2i):
