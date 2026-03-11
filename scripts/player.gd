@@ -56,6 +56,9 @@ func move_on_grid(dir):
 			magnet_behind.pull_to(old_position, dir)
 
 func get_magnet_at(tile_coords: Vector2i):
+	if not is_inside_tree():
+		return null
+		
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsShapeQueryParameters2D.new()
 	
