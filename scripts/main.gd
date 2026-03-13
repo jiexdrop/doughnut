@@ -7,9 +7,10 @@ const GRID_HEIGHT := 18
 @onready var tilemap: TileMapLayer = $TileMapLayer
 var goal_positions: Array[Vector2i] = []
 
-# Update these to match your actual TileSet IDs
-const GOAL_SOURCE_ID = 0 
-const GOAL_ATLAS_COORDS = Vector2i(1, 2) # The 'X' or 'Target' tile
+const GOAL_SOURCE_ID = 0
+const GOAL_ATLAS_COORDS = Vector2i(1, 2)
+
+const VICTORY_SCREEN = preload("res://scenes/victory_screen.tscn")
 
 func _ready() -> void:
 	_connect_signals()
@@ -26,7 +27,6 @@ func _connect_signals() -> void:
 
 func _locate_goals() -> void:
 	goal_positions.clear()
-	# Scan the grid for tiles matching our Goal ID
 	for x in GRID_WIDTH:
 		for y in GRID_HEIGHT:
 			var coords = Vector2i(x, y)
@@ -38,32 +38,42 @@ func check_win_condition() -> void:
 	var boxes = get_tree().get_nodes_in_group("boxes")
 	var boxes_on_goals = 0
 
-	# Reset all boxes to normal first, then check positions
 	for box in boxes:
 		var current_grid_pos = tilemap.local_to_map(box.position)
-		
 		if current_grid_pos in goal_positions:
 			box.set_on_goal(true)
 			boxes_on_goals += 1
 		else:
 			box.set_on_goal(false)
 
-	# If every goal is covered by a box
 	if boxes_on_goals >= goal_positions.size() and goal_positions.size() > 0:
 		print("Level Complete!")
-		_load_next_level()
+		_open_ui()
 
 func is_box_at(grid_pos: Vector2i) -> bool:
-	# Convert grid coords (1,1) to world pixels (8,8) for the check
 	var world_pos = tilemap.map_to_local(grid_pos)
-	
-	# Simple way: Check the "boxes" group for matching positions
 	for box in get_tree().get_nodes_in_group("boxes"):
 		if tilemap.local_to_map(box.position) == grid_pos:
 			box.color()
 			return true
 	return false
 
+func _open_ui() -> void:
+	# Avoid opening twice if already present
+	if get_node_or_null("VictoryScreen"):
+		return
+
+	var canvas_layer := CanvasLayer.new()
+	canvas_layer.name = "VictoryScreen"
+	add_child(canvas_layer)
+
+	var victory := VICTORY_SCREEN.instantiate()
+	canvas_layer.add_child(victory)
+
+	victory.next_level_pressed.connect(_load_next_level)
+	victory.main_menu_pressed.connect(func():
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	)
+
 func _load_next_level() -> void:
-	# Change this to your actual next scene path
 	get_tree().change_scene_to_packed(next_level)
