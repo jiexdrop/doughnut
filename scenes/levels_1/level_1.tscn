@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://main"]
 
 [ext_resource type="Script" uid="uid://chjfanxayl4in" path="res://scripts/main.gd" id="1_6761a"]
-[ext_resource type="PackedScene" uid="uid://tq7g8r2u67vy" path="res://scenes/levels/level_2.tscn" id="2_oc4kc"]
+[ext_resource type="PackedScene" uid="uid://tq7g8r2u67vy" path="res://scenes/levels_1/level_2.tscn" id="2_oc4kc"]
 [ext_resource type="Texture2D" uid="uid://ihi3cewu0e7x" path="res://assets/Sprite-0001.png" id="2_sk5k4"]
 [ext_resource type="Script" uid="uid://difno1fvr55yv" path="res://scripts/pixel_camera.gd" id="3_oc4kc"]
 [ext_resource type="PackedScene" uid="uid://ccsiamhj8f0wg" path="res://scenes/player.tscn" id="4_s8va5"]

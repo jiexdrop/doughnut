@@ -10,7 +10,7 @@ var goal_positions: Array[Vector2i] = []
 const GOAL_SOURCE_ID = 0
 const GOAL_ATLAS_COORDS = Vector2i(1, 2)
 
-const VICTORY_SCREEN = preload("res://scenes/victory_screen.tscn")
+const VICTORY_SCREEN = preload("res://scenes/ui/victory_screen.tscn")
 
 func _ready() -> void:
 	_connect_signals()
@@ -72,7 +72,7 @@ func _open_ui() -> void:
 
 	victory.next_level_pressed.connect(_load_next_level)
 	victory.main_menu_pressed.connect(func():
-		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
 	)
 
 func _load_next_level() -> void:
