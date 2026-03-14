@@ -54,6 +54,9 @@ position = Vector2(44, 68)
 [node name="Box" parent="." unique_id=665832972 instance=ExtResource("5_4wsov")]
 position = Vector2(148, 60)
 
+[node name="Box2" parent="." unique_id=312176560 instance=ExtResource("5_4wsov")]
+position = Vector2(140, 60)
+
 [node name="Box3" parent="." unique_id=699899722 instance=ExtResource("5_4wsov")]
 position = Vector2(148, 84)
 

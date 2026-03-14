@@ -13,10 +13,10 @@ func activate(player: CharacterBody2D) -> void:
 	var magnet_tile = get_tile()
 	var player_tile = tile_map.local_to_map(player.position)
 	
-	var expected_player_tile = magnet_tile - Vector2i(facing_dir)
-	if player_tile != expected_player_tile:
-		print("Wrong side — no pull")
-		return
+	#var expected_player_tile = magnet_tile - Vector2i(facing_dir)
+	#if player_tile != expected_player_tile:
+		#print("Wrong side — no pull")
+		#return
 
 	# Find closest box in facing direction (no range cap)
 	var boxes = get_tree().get_nodes_in_group("boxes")
