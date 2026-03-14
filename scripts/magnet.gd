@@ -45,10 +45,7 @@ func activate(player: CharacterBody2D) -> void:
 	# Pull box (found_dist - 1) steps so it lands adjacent to magnet
 	var pull_dir = Vector2(-facing_dir.x, -facing_dir.y)
 	print("Pulling box ", found_dist - 1, " steps")
-	for step in range(found_dist - 1):
-		if not found_box.try_push(pull_dir):
-			print("Blocked at step ", step)
-			break
+	found_box.try_push(pull_dir)
 			
 # Convert rotation to the nearest cardinal tile direction.
 # Godot's default 0° points DOWN (+Y in 2D), matching your magnet's initial rotation.
