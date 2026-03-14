@@ -1,6 +1,9 @@
 [gd_resource type="Theme" format=3 uid="uid://cjo846he7np07"]
 
-[ext_resource type="FontFile" uid="uid://oxwq1x5g4tmx" path="res://assets/Pixellari.ttf" id="1_5x3i2"]
+[ext_resource type="FontFile" uid="uid://cn1rmsk26smx1" path="res://assets/fonts/PressStart2P-Regular.ttf" id="1_5x3i2"]
 
 [resource]
 default_font = ExtResource("1_5x3i2")
+default_font_size = 16
+Button/font_sizes/font_size = 16
+Label/font_sizes/font_size = 16
