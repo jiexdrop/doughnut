@@ -27,7 +27,7 @@ func _connect_signals() -> void:
 	for box in get_tree().get_nodes_in_group("boxes"):
 		if not box.is_connected("on_move", check_win_condition):
 			box.on_move.connect(check_win_condition)
-
+			
 func _locate_goals() -> void:
 	goal_positions.clear()
 	for x in GRID_WIDTH:

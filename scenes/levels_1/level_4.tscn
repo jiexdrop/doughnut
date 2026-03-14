@@ -6,8 +6,7 @@
 [ext_resource type="Script" uid="uid://difno1fvr55yv" path="res://scripts/pixel_camera.gd" id="3_um320"]
 [ext_resource type="PackedScene" uid="uid://ccsiamhj8f0wg" path="res://scenes/player.tscn" id="4_glw47"]
 [ext_resource type="PackedScene" uid="uid://chgxj2178wx83" path="res://scenes/box.tscn" id="5_4wsov"]
-[ext_resource type="Script" uid="uid://c7g1jfm1cra11" path="res://scripts/magnet.gd" id="6_qvnao"]
-[ext_resource type="Texture2D" uid="uid://djv8f5v70o4ry" path="res://assets/magnet.png" id="7_hsvsk"]
+[ext_resource type="PackedScene" uid="uid://bkdu3mactvdp1" path="res://scenes/magnet.tscn" id="7_pj6nn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
 texture = ExtResource("2_ts8eg")
@@ -36,9 +35,6 @@ custom_data_layer_0/name = "walkable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_jyhfs")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fmg3e"]
-size = Vector2(8, 8)
-
 [node name="Level4" type="Node2D" unique_id=678591140]
 script = ExtResource("1_5vn0v")
 next_level = ExtResource("2_um320")
@@ -59,17 +55,19 @@ position = Vector2(44, 68)
 position = Vector2(148, 60)
 
 [node name="Box3" parent="." unique_id=699899722 instance=ExtResource("5_4wsov")]
-position = Vector2(148, 76)
+position = Vector2(148, 84)
 
-[node name="Box2" parent="." unique_id=473345725 instance=ExtResource("5_4wsov")]
-position = Vector2(148, 68)
+[node name="Magnet" parent="." unique_id=1954190220 instance=ExtResource("7_pj6nn")]
+position = Vector2(116, 60)
+rotation = -1.5707964
 
-[node name="Magnet" type="StaticBody2D" parent="." unique_id=1038443863]
-position = Vector2(100, 68)
-script = ExtResource("6_qvnao")
+[node name="Magnet2" parent="." unique_id=763038350 instance=ExtResource("7_pj6nn")]
+position = Vector2(116, 84)
+rotation = -1.5707964
 
-[node name="Sprite2D" type="Sprite2D" parent="Magnet" unique_id=393730042]
-texture = ExtResource("7_hsvsk")
+[node name="Magnet3" parent="." unique_id=678655542 instance=ExtResource("7_pj6nn")]
+position = Vector2(140, 44)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Magnet" unique_id=1087133811]
-shape = SubResource("RectangleShape2D_fmg3e")
+[node name="Magnet4" parent="." unique_id=1853566105 instance=ExtResource("7_pj6nn")]
+position = Vector2(140, 100)
+rotation = -3.1415927

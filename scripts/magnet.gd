@@ -2,84 +2,56 @@ class_name Magnet
 extends StaticBody2D
 
 @onready var tile_map: TileMapLayer = $"../TileMapLayer"
-@onready var sprite_2d: Sprite2D = $Sprite2D
+@export var tether_range: int = 6
 
-# Optional: Add different textures for the magnet if you like
-const MAGNET_TEXTURE = preload("res://assets/original_box.png") 
+func get_tile() -> Vector2i:
+	return tile_map.local_to_map(position)
 
-signal on_move
+# Call this from the Player when they walk onto the magnet's tile
+func activate(player: CharacterBody2D) -> void:
+	var facing_dir = _get_facing_dir()
+	var magnet_tile = get_tile()
+	var player_tile = tile_map.local_to_map(player.position)
+	
+	var expected_player_tile = magnet_tile - Vector2i(facing_dir)
+	if player_tile != expected_player_tile:
+		print("Wrong side — no pull")
+		return
 
-# --- PUSH LOGIC (Called by Player) ---
-func try_push(dir: Vector2) -> bool:
-	var current_tile = tile_map.local_to_map(position)
-	var target_tile = current_tile + Vector2i(dir.x, dir.y)
-	
-	# 1. Check if the target tile is blocked by walls
-	var tile_data = tile_map.get_cell_tile_data(target_tile)
-	if tile_data and tile_data.get_custom_data("walkable") == false:
-		return false
-		
-	# 2. Check if there is another object (like a box) in the way
-	if is_occupied(target_tile):
-		return false
-	
-	# 3. Before moving, identify if a box is behind us to pull it along
-	var pull_dir = -dir
-	var behind_tile = current_tile + Vector2i(pull_dir.x, pull_dir.y)
-	var box_to_pull = get_box_at_tile(behind_tile)
-	
-	# Store old position for the box to move into
-	var old_position = position
-	
-	# Move the Magnet
-	position = tile_map.map_to_local(target_tile)
-	
-	# If a box was behind us, pull it into our old spot
-	if box_to_pull:
-		box_to_pull.position = old_position
-	
-	on_move.emit()
-	return true
+	# Find closest box in facing direction (no range cap)
+	var boxes = get_tree().get_nodes_in_group("boxes")
+	var found_box = null
+	var found_dist = INF
 
-# --- PULL LOGIC (Called by Player when they walk AWAY from the magnet) ---
-func pull_to(new_position: Vector2, dir: Vector2):
-	var old_pos = position
-	var old_tile = tile_map.local_to_map(old_pos)
-	
-	# Determine direction of the pull to find boxes behind the magnet
-	var behind_tile = old_tile - Vector2i(dir.x, dir.y)
-	
-	var box_to_pull = get_box_at_tile(behind_tile)
-	
-	# Move the magnet to the player's old spot
-	position = new_position
-	
-	# If a box was attached/behind, it moves into the magnet's old spot
-	if box_to_pull:
-		box_to_pull.position = old_pos
-		
-	on_move.emit()
+	for box in boxes:
+		var box_tile = tile_map.local_to_map(box.position)
+		var delta = box_tile - magnet_tile
+		# Must be on the same axis as facing direction
+		if facing_dir.x != 0 and delta.y == 0:
+			var dist = delta.x * facing_dir.x  # positive = in front
+			if dist > 0 and dist < found_dist:
+				found_dist = dist
+				found_box = box
+		elif facing_dir.y != 0 and delta.x == 0:
+			var dist = delta.y * facing_dir.y
+			if dist > 0 and dist < found_dist:
+				found_dist = dist
+				found_box = box
 
-# --- HELPERS ---
+	if found_box == null:
+		print("No box found in facing direction")
+		return
 
-func is_occupied(tile_coords: Vector2i) -> bool:
-	var space_state = get_world_2d().direct_space_state
-	var query = PhysicsPointQueryParameters2D.new()
-	query.position = tile_map.map_to_local(tile_coords)
-	query.exclude = [self]
-	var result = space_state.intersect_point(query)
-	return not result.is_empty()
-
-func get_box_at_tile(tile_coords: Vector2i):
-	var space_state = get_world_2d().direct_space_state
-	var query = PhysicsPointQueryParameters2D.new()
-	query.position = tile_map.map_to_local(tile_coords)
-	query.exclude = [self]
-	var result = space_state.intersect_point(query)
-	
-	if result:
-		var collider = result[0].collider
-		# We check for try_push to ensure it's a Box (or another Magnet!)
-		if collider.has_method("try_push") and collider != self:
-			return collider
-	return null
+	# Pull box (found_dist - 1) steps so it lands adjacent to magnet
+	var pull_dir = Vector2(-facing_dir.x, -facing_dir.y)
+	print("Pulling box ", found_dist - 1, " steps")
+	found_box.try_push(pull_dir)
+			
+# Convert rotation to the nearest cardinal tile direction.
+# Godot's default 0° points DOWN (+Y in 2D), matching your magnet's initial rotation.
+func _get_facing_dir() -> Vector2i:
+	var angle = rotation  # radians
+	# Snap to nearest 90° increment
+	var snapped = round(angle / (PI / 2)) * (PI / 2)
+	var dir = Vector2.DOWN.rotated(snapped).normalized()
+	return Vector2i(round(dir.x), round(dir.y))

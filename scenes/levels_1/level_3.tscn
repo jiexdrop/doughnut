@@ -6,8 +6,7 @@
 [ext_resource type="Script" uid="uid://difno1fvr55yv" path="res://scripts/pixel_camera.gd" id="3_fkk1g"]
 [ext_resource type="PackedScene" uid="uid://ccsiamhj8f0wg" path="res://scenes/player.tscn" id="4_ugcn1"]
 [ext_resource type="PackedScene" uid="uid://chgxj2178wx83" path="res://scenes/box.tscn" id="5_pimnq"]
-[ext_resource type="Script" uid="uid://c7g1jfm1cra11" path="res://scripts/magnet.gd" id="6_fkk1g"]
-[ext_resource type="Texture2D" uid="uid://djv8f5v70o4ry" path="res://assets/magnet.png" id="6_ftfob"]
+[ext_resource type="PackedScene" uid="uid://bkdu3mactvdp1" path="res://scenes/magnet.tscn" id="7_h0hgt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
 texture = ExtResource("2_ftfob")
@@ -36,9 +35,6 @@ custom_data_layer_0/name = "walkable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_jyhfs")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fmg3e"]
-size = Vector2(8, 8)
-
 [node name="Level2" type="Node2D" unique_id=678591140]
 script = ExtResource("1_fmg3e")
 next_level = ExtResource("2_ugcn1")
@@ -56,14 +52,8 @@ zoom_level = 4
 position = Vector2(44, 68)
 
 [node name="Box" parent="." unique_id=665832972 instance=ExtResource("5_pimnq")]
-position = Vector2(148, 60)
+position = Vector2(148, 68)
 
-[node name="Magnet" type="StaticBody2D" parent="." unique_id=1038443863]
+[node name="Magnet" parent="." unique_id=1954190220 instance=ExtResource("7_h0hgt")]
 position = Vector2(100, 68)
-script = ExtResource("6_fkk1g")
-
-[node name="Sprite2D" type="Sprite2D" parent="Magnet" unique_id=393730042]
-texture = ExtResource("6_ftfob")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Magnet" unique_id=1087133811]
-shape = SubResource("RectangleShape2D_fmg3e")
+rotation = -1.5707964
