@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://d083hhd8e5w20"]
+
+[ext_resource type="Script" uid="uid://blbvfra5qe45n" path="res://scripts/pause_screen.gd" id="1_milqs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.08, 0.08, 0.12, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.2, 0.8)
+
+[node name="PauseScreen" type="Control" unique_id=308493721]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_milqs")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=18460967]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1715860176]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -140.0
+offset_right = 180.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=876387470]
+layout_mode = 2
+theme_override_constants/separation = 24
+metadata/_edit_use_anchors_ = false
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=963839725]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 0
+
+[node name="VictoryLabel" type="Label" parent="Panel/VBoxContainer/MarginContainer" unique_id=371253446]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 42
+text = "PAUSE"
+horizontal_alignment = 1
+
+[node name="SubLabel" type="Label" parent="Panel/VBoxContainer" unique_id=778302246]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 16
+text = "Press \"R\" to restart"
+horizontal_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=50773305]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="MarginButtons" type="MarginContainer" parent="Panel/VBoxContainer/ButtonContainer" unique_id=1682148796]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="InnerButtons" type="VBoxContainer" parent="Panel/VBoxContainer/ButtonContainer/MarginButtons" unique_id=102805898]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ContinueButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer/MarginButtons/InnerButtons" unique_id=922264133]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "▶  Continue"
+
+[node name="MainMenuButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer/MarginButtons/InnerButtons" unique_id=1431826427]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "⌂  Main Menu"

@@ -22,7 +22,7 @@ color = Color(0.063, 0.063, 0.122, 1)
 
 [node name="TopBar" type="ColorRect" parent="." unique_id=190344047]
 layout_mode = 1
-offset_right = 1280.0
+offset_right = 1024.0
 offset_bottom = 60.0
 color = Color(0.08, 0.08, 0.16, 1)
 

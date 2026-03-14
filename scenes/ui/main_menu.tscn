@@ -20,8 +20,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.063, 0.063, 0.122, 1)
 
-[node name="StarField" type="Node2D" parent="." unique_id=908718632]
-
 [node name="CenterContainer" type="VBoxContainer" parent="." unique_id=436702947]
 layout_mode = 1
 anchors_preset = 8
@@ -93,6 +91,3 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_font_sizes/font_size = 12
 text = "v0.1.0"
-
-[node name="PixelCursor" type="Sprite2D" parent="." unique_id=901258637]
-visible = false
