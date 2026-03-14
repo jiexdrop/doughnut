@@ -11,6 +11,7 @@ const GOAL_SOURCE_ID = 0
 const GOAL_ATLAS_COORDS = Vector2i(1, 2)
 
 const VICTORY_SCREEN = preload("res://scenes/ui/victory_screen.tscn")
+const PAUSE_SCREEN = preload("res://scenes/ui/pause_screen.tscn")
 
 func _ready() -> void:
 	_connect_signals()
@@ -19,6 +20,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
+	if Input.is_action_just_pressed("pause"):
+		_open_pause_ui()
 
 func _connect_signals() -> void:
 	for box in get_tree().get_nodes_in_group("boxes"):
@@ -48,7 +51,7 @@ func check_win_condition() -> void:
 
 	if boxes_on_goals >= goal_positions.size() and goal_positions.size() > 0:
 		print("Level Complete!")
-		_open_ui()
+		_open_victory_ui()
 
 func is_box_at(grid_pos: Vector2i) -> bool:
 	var world_pos = tilemap.map_to_local(grid_pos)
@@ -58,7 +61,7 @@ func is_box_at(grid_pos: Vector2i) -> bool:
 			return true
 	return false
 
-func _open_ui() -> void:
+func _open_victory_ui() -> void:
 	# Avoid opening twice if already present
 	if get_node_or_null("VictoryScreen"):
 		return
@@ -72,6 +75,26 @@ func _open_ui() -> void:
 
 	victory.next_level_pressed.connect(_load_next_level)
 	victory.main_menu_pressed.connect(func():
+		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
+	)
+
+func _open_pause_ui():
+	# Avoid opening twice if already present
+	if get_node_or_null("PauseScreen"):
+		return
+
+	var canvas_layer := CanvasLayer.new()
+	canvas_layer.name = "PauseScreen"
+	add_child(canvas_layer)
+
+	var pause := PAUSE_SCREEN.instantiate()
+	canvas_layer.add_child(pause)
+
+	pause.continue_pressed.connect(func():
+		remove_child(canvas_layer)
+		pause.queue_free()
+	)
+	pause.main_menu_pressed.connect(func():
 		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
 	)
 
