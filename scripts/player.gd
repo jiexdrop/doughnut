@@ -1,8 +1,6 @@
 class_name Player
 extends CharacterBody2D
-
 @onready var tile_map: TileMapLayer = $"../TileMapLayer"
-
 func _physics_process(_delta):
 	var direction = Vector2.ZERO
 	if Input.is_action_just_pressed("right"): direction.x = 1
@@ -11,7 +9,8 @@ func _physics_process(_delta):
 	if Input.is_action_just_pressed("up"):    direction.y = -1
 	if direction != Vector2.ZERO:
 		move_on_grid(direction)
-
+	if Input.is_action_just_pressed("activate"):
+		try_activate()
 func move_on_grid(dir: Vector2):
 	var target_tile = tile_map.local_to_map(position) + Vector2i(dir)
 	var target_pos  = tile_map.map_to_local(target_tile)
@@ -20,7 +19,6 @@ func move_on_grid(dir: Vector2):
 	query.position = target_pos
 	query.exclude  = [self]
 	var hits = space_state.intersect_point(query)
-
 	var moved = false
 	if hits:
 		var collider = hits[0].collider
@@ -28,7 +26,6 @@ func move_on_grid(dir: Vector2):
 			if collider.try_push(dir):
 				position = target_pos
 				moved = true
-		# ← NEW: pick up the magnet
 		elif collider.has_method("activate"):
 			collider.activate(self)
 			moved = true
@@ -38,8 +35,20 @@ func move_on_grid(dir: Vector2):
 			return
 		position = target_pos
 		moved = true
-
-
+func try_activate():
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsPointQueryParameters2D.new()
+	query.exclude = [self]
+	var directions = [Vector2.RIGHT, Vector2.LEFT, Vector2.DOWN, Vector2.UP]
+	for dir in directions:
+		var neighbor_tile = tile_map.local_to_map(position) + Vector2i(dir)
+		query.position = tile_map.map_to_local(neighbor_tile)
+		var hits = space_state.intersect_point(query)
+		if hits:
+			var collider = hits[0].collider
+			if collider.has_method("activate"):
+				collider.activate(self)
+				return
 func _tile_occupied(tile: Vector2i, exclude_box) -> bool:
 	var world_pos = tile_map.map_to_local(tile)
 	var space_state = get_world_2d().direct_space_state
