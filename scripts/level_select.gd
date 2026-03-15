@@ -30,17 +30,16 @@ const WORLDS: Array = [
 			{ "label": "1-3",  "scene": "res://scenes/levels_1/level_3.tscn", "locked": false },
 			{ "label": "1-4",  "scene": "res://scenes/levels_1/level_4.tscn", "locked": false },
 			{ "label": "1-5",  "scene": "res://scenes/levels_1/level_5.tscn", "locked": false },
-			{ "label": "1-6",  "scene": "res://scenes/levels_1/level_6.tscn", "locked": false },
 		]
 	},
 	{
 		"name":   "WORLD 2 – CAVES",
 		"color":  Color(0.65, 0.45, 0.20),
 		"levels": [
-			{ "label": "2-1",  "scene": "res://scenes/levels_2/level_1.tscn", "locked": true },
-			{ "label": "2-2",  "scene": "res://scenes/levels_2/level_2.tscn", "locked": true },
-			{ "label": "2-3",  "scene": "res://scenes/levels_2/level_3.tscn", "locked": true },
-			{ "label": "2-B",  "scene": "res://scenes/levels_2/level_boss.tscn", "locked": true },
+			{ "label": "2-1",  "scene": "res://scenes/levels_2/level_1.tscn", "locked": false },
+			{ "label": "2-2",  "scene": "res://scenes/levels_2/level_2.tscn", "locked": false },
+			{ "label": "2-3",  "scene": "res://scenes/levels_2/level_3.tscn", "locked": false },
+			{ "label": "2-4",  "scene": "res://scenes/levels_2/level_4.tscn", "locked": false },
 		]
 	},
 	{

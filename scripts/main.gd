@@ -9,6 +9,7 @@ var goal_positions: Array[Vector2i] = []
 
 const GOAL_SOURCE_ID = 0
 const GOAL_ATLAS_COORDS = Vector2i(1, 2)
+const GOAL_ATLAS_COORDS_2 = Vector2i(1, 3)
 
 const VICTORY_SCREEN = preload("res://scenes/ui/victory_screen.tscn")
 const PAUSE_SCREEN = preload("res://scenes/ui/pause_screen.tscn")
@@ -35,6 +36,8 @@ func _locate_goals() -> void:
 			var coords = Vector2i(x, y)
 			if tilemap.get_cell_source_id(coords) == GOAL_SOURCE_ID:
 				if tilemap.get_cell_atlas_coords(coords) == GOAL_ATLAS_COORDS:
+					goal_positions.append(coords)
+				elif tilemap.get_cell_atlas_coords(coords) == GOAL_ATLAS_COORDS_2:
 					goal_positions.append(coords)
 
 func check_win_condition() -> void:
