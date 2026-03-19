@@ -22,7 +22,7 @@ const MAIN_MENU_SCENE := "res://scenes/ui/main_menu.tscn"
 
 const WORLDS: Array = [
 	{
-		"name":   "WORLD 1 – GRASSLANDS",
+		"name":   "WORLD 1 – INTRO",
 		"color":  Color(0.25, 0.75, 0.30),
 		"levels": [
 			{ "label": "1-1",  "scene": "res://scenes/levels_1/level_1.tscn", "locked": false },
@@ -33,7 +33,7 @@ const WORLDS: Array = [
 		]
 	},
 	{
-		"name":   "WORLD 2 – CAVES",
+		"name":   "WORLD 2 – GRASSLANDS",
 		"color":  Color(0.65, 0.45, 0.20),
 		"levels": [
 			{ "label": "2-1",  "scene": "res://scenes/levels_2/level_1.tscn", "locked": false },
@@ -43,13 +43,13 @@ const WORLDS: Array = [
 		]
 	},
 	{
-		"name":   "WORLD 3 – OVERWORLD",
+		"name":   "WORLD 3 – CAVES",
 		"color":  Color(0.65, 0.45, 0.20),
 		"levels": [
 			{ "label": "3-1",  "scene": "res://scenes/levels_3/level_1.tscn", "locked": true },
 			{ "label": "3-2",  "scene": "res://scenes/levels_3/level_2.tscn", "locked": true },
 			{ "label": "3-3",  "scene": "res://scenes/levels_3/level_3.tscn", "locked": true },
-			{ "label": "3-B",  "scene": "res://scenes/levels_3/level_boss.tscn", "locked": true },
+			{ "label": "3-4",  "scene": "res://scenes/levels_3/level_4.tscn", "locked": true },
 		]
 	},
 	# Add more worlds here following the same pattern ↑
