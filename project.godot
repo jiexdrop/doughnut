@@ -14,7 +14,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="PixelArtGame"
+config/name="SokoMagnet"
 run/main_scene="uid://dpwqosptxn767"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -23,7 +23,6 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1024
 window/size/viewport_height=576
-window/size/mode=3
 window/stretch/mode="viewport"
 
 [global_group]

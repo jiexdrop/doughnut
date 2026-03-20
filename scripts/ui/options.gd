@@ -64,17 +64,20 @@ func _build_overlay() -> void:
 # ── Load / Save ───────────────────────────────────────────────────────────────
 
 func _load_bindings() -> void:
-	# Only load the actions we care about
+	# Always reset to project defaults first so buttons always show something
+	InputMap.load_from_project_settings()
+
+	# Populate current_bindings from the fresh defaults
 	for action in ALLOWED_ACTIONS:
 		if not InputMap.has_action(action):
 			push_warning("InputMap: action '%s' not found in project settings." % action)
 			continue
 		current_bindings[action] = InputMap.action_get_events(action).duplicate()
 
-	# Then overlay any saved user customisations
+	# Then overlay any saved user customisations on top
 	var cfg := ConfigFile.new()
 	if cfg.load(SAVE_PATH) != OK:
-		return
+		return  # No save file yet — defaults shown, nothing more to do
 
 	for action in cfg.get_sections():
 		if action not in ALLOWED_ACTIONS:
@@ -91,7 +94,6 @@ func _load_bindings() -> void:
 			InputMap.action_erase_events(action)
 			for ev in events:
 				InputMap.action_add_event(action, ev)
-
 
 func _save_bindings() -> void:
 	var cfg := ConfigFile.new()

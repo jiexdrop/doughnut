@@ -128,7 +128,7 @@ func _make_level_card(lvl: Dictionary, accent: Color) -> Button:
 	var locked: bool = lvl.get("locked", false)
 
 	btn.custom_minimum_size = Vector2(90, 90)
-	btn.text = ("🔒\n" if locked else "") + lvl["label"]
+	btn.text = ("LOCK\n" if locked else "") + lvl["label"]
 	btn.disabled = locked
 	btn.add_theme_font_size_override("font_size", 16)
 

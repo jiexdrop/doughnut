@@ -88,11 +88,11 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "▶  Continue"
+text = "Continue"
 
 [node name="MainMenuButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer/MarginButtons/InnerButtons" unique_id=1431826427]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "⌂  Main Menu"
+text = " Main Menu"

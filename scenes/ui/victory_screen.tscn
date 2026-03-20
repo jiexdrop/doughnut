@@ -59,7 +59,7 @@ theme_override_constants/margin_bottom = 0
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
 theme_override_font_sizes/font_size = 42
-text = "🏆 VICTORY!"
+text = " VICTORY!"
 horizontal_alignment = 1
 
 [node name="SubLabel" type="Label" parent="Panel/VBoxContainer" unique_id=778302246]
@@ -88,11 +88,11 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "▶  Next Level"
+text = "Next Level"
 
 [node name="MainMenuButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer/MarginButtons/InnerButtons" unique_id=1431826427]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "⌂  Main Menu"
+text = "Main Menu"
