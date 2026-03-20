@@ -7,6 +7,7 @@ extends Control
 
 const LEVEL_SELECT_SCENE := "res://scenes/ui/level_select.tscn"
 const FIRST_LEVEL_SCENE  := "res://scenes/levels_1/level_1.tscn"
+const OPTIONS_SCENE  := "res://scenes/ui/options.tscn"
 
 # Starfield pixel art effect
 var _stars: Array[Dictionary] = []
@@ -44,8 +45,7 @@ func _on_level_select_pressed() -> void:
 	_change_scene(LEVEL_SELECT_SCENE)
 
 func _on_options_pressed() -> void:
-	# TODO: push your options menu scene or show a popup
-	print("Options not yet implemented.")
+	_change_scene(OPTIONS_SCENE)
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
